@@ -1,4 +1,5 @@
 import React from "react";
+import { FeaturedCelebrities, FeaturedEvnets, FeaturedVideos } from "../../components/bids/bids";
 import {
   Hero,
   Bids,
@@ -13,7 +14,9 @@ const Home_1 = () => {
     <main>
       <Meta title="Home 1" />
       <Hero />
-      <Bids />
+      <FeaturedEvnets />
+      <FeaturedVideos />
+      <FeaturedCelebrities />
       <Top_collection />
       <Tranding_category />
       <NewseLatter />

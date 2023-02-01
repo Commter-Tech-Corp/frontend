@@ -12,7 +12,24 @@ import { bidsModalShow } from "../../redux/counterSlice";
 import { useDispatch } from "react-redux";
 import Likes from "../likes";
 
-const BidsCarousel = () => {
+export interface SliderItem {
+  id: number;
+  image: string;
+  title: string;
+  bid_number?: number;
+  eth_number?: number;
+  react_number?: number;
+  price?: number;
+  schedule?: string;
+}
+
+interface Props {
+  data?: SliderItem[];
+}
+
+const BidsCarousel = ({
+  data = bidsData,
+}: Props) => {
   const dispatch = useDispatch();
   const handleclick = () => {
     console.log("clicked on ");
@@ -44,8 +61,8 @@ const BidsCarousel = () => {
         }}
         className=" card-slider-4-columns !py-5"
       >
-        {bidsData.map((item) => {
-          const { id, image, title, bid_number, eth_number, react_number } =
+        {data.map((item) => {
+          const { id, image, title, bid_number, eth_number, react_number, price } =
             item;
           const itemLink = image
             .split("/")
@@ -69,7 +86,8 @@ const BidsCarousel = () => {
                             layout="responsive"
                             objectFit="cover"
                             className="rounded-[0.625rem] w-full"
-                            loading="lazy"
+                            unoptimized={true}
+                            placeholder="empty"
                           />
                         </div>
                       </a>
@@ -83,28 +101,36 @@ const BidsCarousel = () => {
                         </span>
                       </a>
                     </Link>
-                    <span className="dark:border-jacarta-600 border-jacarta-100 flex items-center whitespace-nowrap rounded-md border py-1 px-2">
-                      <Tippy content={<span>ETH</span>}>
-                        <img
-                          src="/images/eth-icon.svg"
-                          alt=""
-                          className="w-3 h-3 mr-1"
-                        />
-                      </Tippy>
+                    {price !== undefined && (
+                      <span className="dark:border-jacarta-600 border-jacarta-100 flex items-center whitespace-nowrap rounded-md border py-1 px-2">
+                        <Tippy content={<span>$</span>}>
+                          {/* <img
+                            src="/images/eth-icon.svg"
+                            alt=""
+                            className="w-3 h-3 mr-1"
+                          /> */}
+                          <span className="text-green text-sm font-medium tracking-tight">
+                            $
+                          </span>
+                        </Tippy>
 
-                      <span className="text-green text-sm font-medium tracking-tight">
-                        {eth_number} ETH
+                        <span className="text-green text-sm font-medium tracking-tight">
+                          {price}
+                        </span>
                       </span>
-                    </span>
+                    )}
                   </div>
-                  <div className="mt-2 text-sm">
-                    <span className="dark:text-jacarta-300 text-jacarta-500">
-                      Current Bid
-                    </span>
-                    <span className="dark:text-jacarta-100 text-jacarta-700">
-                      {bid_number} ETH
-                    </span>
-                  </div>
+
+                  {item.schedule && (
+                    <div className="mt-2 text-sm">
+                      <span className="dark:text-jacarta-300 text-jacarta-500">
+                        Schedule: &nbsp;
+                      </span>
+                      <span className="dark:text-jacarta-100 text-jacarta-700">
+                        {item.schedule}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="mt-8 flex items-center justify-between">
                     <button
@@ -112,13 +138,13 @@ const BidsCarousel = () => {
                       className="text-accent font-display text-sm font-semibold"
                       onClick={() => dispatch(bidsModalShow())}
                     >
-                      Place bid
+                      View Details
                     </button>
 
-                    <Likes
+                    {/* <Likes
                       like={react_number}
                       classes="flex items-center space-x-1"
-                    />
+                    /> */}
                   </div>
                 </div>
               </article>
