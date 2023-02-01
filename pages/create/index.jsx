@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css"; // optional
