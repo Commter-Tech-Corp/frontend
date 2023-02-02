@@ -13,6 +13,20 @@ import Meta from '../../components/Meta';
 import { useDispatch } from 'react-redux';
 import { bidsModalShow } from '../../redux/counterSlice';
 
+interface DataItemType {
+	id: string;
+    image: string;
+    title: string;
+    price: number;
+    likes: number;
+    text: string;
+    creatorImage: string;
+    ownerImage: string;
+    creatorname: string;
+    ownerName: string;
+    auction_timer: string;
+}
+
 const Item = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();

@@ -94,7 +94,7 @@ export const FeaturedEvnets = () => {
 
         <div className="relative">
           {/* <!-- Slider --> */}
-          <BidsCarousel data={sliderData} />
+          <BidsCarousel data={sliderData} detailUrl='/event/' />
         </div>
       </div>
       {/* <!-- end hot bids --> */}

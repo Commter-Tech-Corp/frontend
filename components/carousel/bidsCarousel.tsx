@@ -25,10 +25,12 @@ export interface SliderItem {
 
 interface Props {
   data?: SliderItem[];
+  detailUrl?: string;
 }
 
 const BidsCarousel = ({
   data = bidsData,
+  detailUrl = '/item/'
 }: Props) => {
   const dispatch = useDispatch();
   const handleclick = () => {
@@ -75,7 +77,7 @@ const BidsCarousel = ({
                 <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
                   <figure>
                     {/* {`item/${itemLink}`} */}
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={detailUrl + id} passHref>
                       <a>
                         <div className="w-full">
                           <Image
@@ -94,7 +96,7 @@ const BidsCarousel = ({
                     </Link>
                   </figure>
                   <div className="mt-4 flex items-center justify-between">
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={detailUrl + id} passHref>
                       <a>
                         <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
                           {title}
@@ -133,13 +135,16 @@ const BidsCarousel = ({
                   )}
 
                   <div className="mt-8 flex items-center justify-between">
-                    <button
-                      type="button"
-                      className="text-accent font-display text-sm font-semibold"
-                      onClick={() => dispatch(bidsModalShow())}
-                    >
-                      View Details
-                    </button>
+                    <Link href={detailUrl + id} passHref>
+                    <a>
+                      <button
+                        type="button"
+                        className="text-accent font-display text-sm font-semibold"
+                      >
+                        View Details
+                      </button>
+                    </a>
+                    </Link>
 
                     {/* <Likes
                       like={react_number}

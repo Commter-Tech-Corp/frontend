@@ -27,7 +27,7 @@ export const getEventDetails = (id: number): Promise<EventDetailType> => {
     return new Promise(async(resolve, reject) => {
         try {
             const res = await axios.get(`${baseApiUrl}event/${id}`);
-            resolve(res.data);
+            
             resolve(res.data.event);
         }
         catch (error) {
