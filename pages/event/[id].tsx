@@ -115,7 +115,7 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 							{/* <!-- Collection / Likes / Actions --> */}
 							<div className="mb-3 flex">
 								{/* <!-- Collection --> */}
-								<div className="flex items-center">
+								{/* <div className="flex items-center">
 									<Link href="#">
 										<a className="text-accent mr-2 text-sm font-bold">CryptoGuysNFT</a>
 									</Link>
@@ -129,18 +129,18 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 											</svg>
 										</Tippy>
 									</span>
-								</div>
+								</div> */}
 
 								{/* <!-- Likes / Actions --> */}
-								<div className="ml-auto flex items-stretch space-x-2 relative">
+								{/* <div className="ml-auto flex items-stretch space-x-2 relative">
 									<Likes
 										like={likes}
 										classes="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 flex items-center space-x-1 rounded-xl border bg-white py-2 px-4"
 									/>
 
-									{/* <!-- Actions --> */}
+									{/* <!-- Actions --> 
 									<Auctions_dropdown classes="dark:border-jacarta-600 dark:hover:bg-jacarta-600 border-jacarta-100 dropdown hover:bg-jacarta-100 dark:bg-jacarta-700 rounded-xl border bg-white" />
-								</div>
+								</div> */}
 							</div>
 
 							<h1 className="font-display text-jacarta-700 mb-4 text-4xl font-semibold dark:text-white">
@@ -149,29 +149,29 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 
 							<div className="mb-8 flex items-center space-x-4 whitespace-nowrap">
 								<div className="flex items-center">
-									<Tippy content={<span>ETH</span>}>
+									{/* <Tippy content={<span>$</span>}>
 										<span className="-ml-1">
 											<svg className="icon mr-1 h-4 w-4">
 												<use xlinkHref="/icons.svg#icon-ETH"></use>
 											</svg>
 										</span>
-									</Tippy>
+									</Tippy> */}
 									<span className="text-green text-sm font-medium tracking-tight">
-										{price} ETH
+										$ {price}
 									</span>
 								</div>
-								<span className="dark:text-jacarta-300 text-jacarta-400 text-sm">
+								{/* <span className="dark:text-jacarta-300 text-jacarta-400 text-sm">
 									Highest bid
 								</span>
 								<span className="dark:text-jacarta-300 text-jacarta-400 text-sm">
 									1/1 available
-								</span>
+								</span> */}
 							</div>
 
 							<p className="dark:text-jacarta-300 mb-10">{text}</p>
 
 							{/* <!-- Creator / Owner --> */}
-							<div className="mb-8 flex flex-wrap">
+							{/* <div className="mb-8 flex flex-wrap">
 								<div className="mr-8 mb-4 flex">
 									<figure className="mr-4 shrink-0">
 										<Link href="/user/avatar_6">
@@ -241,12 +241,12 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 										</Link>
 									</div>
 								</div>
-							</div>
+							</div> */}
 
 							{/* <!-- Bid --> */}
-							<div className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 rounded-2lg border bg-white p-8">
+							{/* <div className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 rounded-2lg border bg-white p-8">
 								<div className="mb-8 sm:flex sm:flex-wrap">
-									{/* <!-- Highest bid --> */}
+									{/* <!-- Highest bid --> 
 									<div className="sm:w-1/2 sm:pr-4 lg:pr-8">
 										<div className="block overflow-hidden text-ellipsis whitespace-nowrap">
 											<span className="dark:text-jacarta-300 text-jacarta-400 text-sm">
@@ -291,7 +291,7 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 										</div>
 									</div>
 
-									{/* <!-- Countdown --> */}
+									{/* <!-- Countdown --> 
 									<div className="dark:border-jacarta-600 sm:border-jacarta-100 mt-4 sm:mt-0 sm:w-1/2 sm:border-l sm:pl-4 lg:pl-8">
 										<span className="js-countdown-ends-label text-jacarta-400 dark:text-jacarta-300 text-sm">
 											Auction ends in
@@ -308,13 +308,13 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 										Place Bid
 									</button>
 								</Link>
-							</div>
+							</div> */}
 							{/* <!-- end bid --> */}
 						</div>
 						{/* <!-- end details --> */}
 					</div>
 					
-					<ItemsTabs />
+					{/* <ItemsTabs /> */}
 				</div>
 			</section>
 			{/* <!-- end item --> */}
