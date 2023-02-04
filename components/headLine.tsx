@@ -1,4 +1,12 @@
-const headLine = ({ text, classes, image, pera }) => {
+
+interface HeadLineProps {
+  text: string;
+  classes?: string;
+  image?: string;
+  pera?: boolean;
+}
+
+const headLine = ({ text, classes, image, pera }: HeadLineProps) => {
   return (
     <div>
       <h2 className={classes}>

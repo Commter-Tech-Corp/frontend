@@ -12,11 +12,27 @@ import { bidsModalShow } from "../../redux/counterSlice";
 import { useDispatch } from "react-redux";
 import Likes from "../likes";
 
-const BidsCarousel = () => {
-  const dispatch = useDispatch();
-  const handleclick = () => {
-    console.log("clicked on ");
-  };
+export interface SliderItem {
+  id: number;
+  image: string;
+  title: string;
+  bid_number?: number;
+  eth_number?: number;
+  react_number?: number;
+  price?: number;
+  schedule?: string;
+}
+
+interface Props {
+  data?: SliderItem[];
+  detailUrl?: string;
+}
+
+const BidsCarousel = ({
+  data = bidsData,
+  detailUrl = '/item/'
+}: Props) => {
+
   return (
     <>
       <Swiper
@@ -44,21 +60,17 @@ const BidsCarousel = () => {
         }}
         className=" card-slider-4-columns !py-5"
       >
-        {bidsData.map((item) => {
-          const { id, image, title, bid_number, eth_number, react_number } =
+        {data.map((item) => {
+          const { id, image, title, bid_number, eth_number, react_number, price } =
             item;
-          const itemLink = image
-            .split("/")
-            .slice(-1)
-            .toString()
-            .replace(".jpg", "");
+            
           return (
             <SwiperSlide className="text-white" key={id}>
               <article>
                 <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
                   <figure>
                     {/* {`item/${itemLink}`} */}
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={detailUrl + id} passHref>
                       <a>
                         <div className="w-full">
                           <Image
@@ -69,56 +81,68 @@ const BidsCarousel = () => {
                             layout="responsive"
                             objectFit="cover"
                             className="rounded-[0.625rem] w-full"
-                            loading="lazy"
+                            unoptimized={true}
+                            placeholder="empty"
                           />
                         </div>
                       </a>
                     </Link>
                   </figure>
                   <div className="mt-4 flex items-center justify-between">
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={detailUrl + id} passHref>
                       <a>
                         <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
                           {title}
                         </span>
                       </a>
                     </Link>
-                    <span className="dark:border-jacarta-600 border-jacarta-100 flex items-center whitespace-nowrap rounded-md border py-1 px-2">
-                      <Tippy content={<span>ETH</span>}>
-                        <img
-                          src="/images/eth-icon.svg"
-                          alt=""
-                          className="w-3 h-3 mr-1"
-                        />
-                      </Tippy>
+                    {price !== undefined && (
+                      <span className="dark:border-jacarta-600 border-jacarta-100 flex items-center whitespace-nowrap rounded-md border py-1 px-2">
+                        <Tippy content={<span>$</span>}>
+                          {/* <img
+                            src="/images/eth-icon.svg"
+                            alt=""
+                            className="w-3 h-3 mr-1"
+                          /> */}
+                          <span className="text-green text-sm font-medium tracking-tight">
+                            $
+                          </span>
+                        </Tippy>
 
-                      <span className="text-green text-sm font-medium tracking-tight">
-                        {eth_number} ETH
+                        <span className="text-green text-sm font-medium tracking-tight">
+                          {price}
+                        </span>
                       </span>
-                    </span>
+                    )}
                   </div>
-                  <div className="mt-2 text-sm">
-                    <span className="dark:text-jacarta-300 text-jacarta-500">
-                      Current Bid
-                    </span>
-                    <span className="dark:text-jacarta-100 text-jacarta-700">
-                      {bid_number} ETH
-                    </span>
-                  </div>
+
+                  {item.schedule && (
+                    <div className="mt-2 text-sm">
+                      <span className="dark:text-jacarta-300 text-jacarta-500">
+                        Schedule: &nbsp;
+                      </span>
+                      <span className="dark:text-jacarta-100 text-jacarta-700">
+                        {item.schedule}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="mt-8 flex items-center justify-between">
-                    <button
-                      type="button"
-                      className="text-accent font-display text-sm font-semibold"
-                      onClick={() => dispatch(bidsModalShow())}
-                    >
-                      Place bid
-                    </button>
+                    <Link href={detailUrl + id} passHref>
+                    <a>
+                      <button
+                        type="button"
+                        className="text-accent font-display text-sm font-semibold"
+                      >
+                        View Details
+                      </button>
+                    </a>
+                    </Link>
 
-                    <Likes
+                    {/* <Likes
                       like={react_number}
                       classes="flex items-center space-x-1"
-                    />
+                    /> */}
                   </div>
                 </div>
               </article>
