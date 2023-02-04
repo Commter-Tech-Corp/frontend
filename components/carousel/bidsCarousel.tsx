@@ -32,10 +32,7 @@ const BidsCarousel = ({
   data = bidsData,
   detailUrl = '/item/'
 }: Props) => {
-  const dispatch = useDispatch();
-  const handleclick = () => {
-    console.log("clicked on ");
-  };
+
   return (
     <>
       <Swiper
@@ -66,11 +63,7 @@ const BidsCarousel = ({
         {data.map((item) => {
           const { id, image, title, bid_number, eth_number, react_number, price } =
             item;
-          const itemLink = image
-            .split("/")
-            .slice(-1)
-            .toString()
-            .replace(".jpg", "");
+            
           return (
             <SwiperSlide className="text-white" key={id}>
               <article>

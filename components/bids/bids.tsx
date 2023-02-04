@@ -38,7 +38,7 @@ const Bids = ({
 
         <div className="relative">
           {/* <!-- Slider --> */}
-          <BidsCarousel />
+          <BidsCarousel key="bids" />
         </div>
       </div>
       {/* <!-- end hot bids --> */}
@@ -75,7 +75,7 @@ export const FeaturedEvnets = () => {
   })
 
   return (
-    <section className={classes}>
+    <section key="event" className={classes}>
       {/* <!-- Hot Bids --> */}
       <picture className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
         <img
@@ -94,7 +94,9 @@ export const FeaturedEvnets = () => {
 
         <div className="relative">
           {/* <!-- Slider --> */}
-          <BidsCarousel data={sliderData} detailUrl='/event/' />
+          {sliderData.length > 0 && (
+            <BidsCarousel key="event" data={sliderData} detailUrl='/event/' />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}
@@ -130,7 +132,7 @@ export const FeaturedVideos = () => {
   })
 
   return (
-    <section className={classes}>
+    <section key="videos" className={classes}>
       {/* <!-- Hot Bids --> */}
       <picture className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
         <img
@@ -149,7 +151,9 @@ export const FeaturedVideos = () => {
 
         <div className="relative">
           {/* <!-- Slider --> */}
-          <BidsCarousel data={sliderData} />
+          {sliderData.length > 0 && (
+            <BidsCarousel key="videos" data={sliderData} detailUrl='/video/' />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}
@@ -184,7 +188,7 @@ export const FeaturedCelebrities = () => {
   })
 
   return (
-    <section className={classes}>
+    <section key="celebs" className={classes}>
       {/* <!-- Hot Bids --> */}
       <picture className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
         <img
@@ -203,7 +207,10 @@ export const FeaturedCelebrities = () => {
 
         <div className="relative">
           {/* <!-- Slider --> */}
-          <BidsCarousel data={sliderData} />
+          {sliderData.length > 0 && (
+            <BidsCarousel key="celebs" data={sliderData} detailUrl='/celebrity/' />
+          )}
+          
         </div>
       </div>
       {/* <!-- end hot bids --> */}

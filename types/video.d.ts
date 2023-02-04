@@ -7,14 +7,16 @@ interface FeaturedVideoResponse {
 interface VidoeItemType  {
     id:           number;
     celebrity_id: number;
-    type:         string;
+    type?:        string;
     name:         string;
     detail:       string;
-    duration:     number;
+    duration?:    number;
     price:        number;
     deleted_at:   null;
     created_at:   Date;
     updated_at:   Date;
+    video?:       string;
+    photo?:       string;
 }
 
 interface VideoLinks {

@@ -16,10 +16,10 @@ interface CelebrityDetailsType {
     created_at:    Date;
     status:        string;
     timezone:      null;
-    days:          any[];
-    calls:         any[];
-    videos:        any[];
-    events:        any[];
+    days:          Day[];
+    calls:         VidoeItemType [];
+    videos?:        VidoeItemType [];
+    events:        EventDetailType [];
 }
 
 interface FeaturedCelebrityResponse {
@@ -44,3 +44,14 @@ interface CelebrityMeta {
     to:           number;
     total:        number;
 }
+
+interface Day {
+    id:           number;
+    celebrity_id: number;
+    start:        Date;
+    end:          Date;
+    track:        Date;
+    status:       string;
+    type:         string;
+}
+

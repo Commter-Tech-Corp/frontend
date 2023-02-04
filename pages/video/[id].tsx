@@ -15,7 +15,7 @@ import { bidsModalShow } from '../../redux/counterSlice';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getEventDetails } from '../../utils/resquests';
 
-interface EventItemType {
+interface DetailsItemType {
 	id: string;
 	image: string;
 	title: string;
@@ -29,7 +29,7 @@ interface EventItemType {
 	auction_timer: string;
 }
 
-const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
+const VideoItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 	data
 }) => {
 	const item: EventDetailType = data;
@@ -68,7 +68,7 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 
 	return (
 		<>
-			<Meta title={`${item.name} || Xhibiter | NFT Marketplace Next.js Template`} />
+			<Meta title={`${pid} || Xhibiter | NFT Marketplace Next.js Template`} />
 			{/*  <!-- Item --> */}
 			<section className="relative lg:mt-24 lg:pt-24 lg:pb-24 mt-24 pt-12 pb-24">
 				<picture className="pointer-events-none absolute inset-0 -z-10 dark:hidden">
@@ -348,4 +348,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	}
 }
 
-export default EventItem;
+export default VideoItem;
