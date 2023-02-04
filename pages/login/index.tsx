@@ -175,7 +175,7 @@ const Login = () => {
                           OTP
                         </label>
                         <input
-                          type="text"
+                          type="password"
                           id="otp"
                           value={otpData.otp}
                           onChange={(e) => setOtpData({ ...otpData, otp: e.target.value })}
