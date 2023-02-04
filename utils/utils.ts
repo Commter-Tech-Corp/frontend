@@ -28,3 +28,13 @@ export const userLogin = ({
     dispatch(setUser(user));
     setTokenCookie(token);
 }
+
+export const userLogout = ({
+    dispatch
+}: {
+    dispatch: Dispatch<AnyAction>;
+}) => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    setTokenCookie('');
+}

@@ -7,8 +7,15 @@ import Meta from "../../components/Meta";
 import { Metamask_comp_login } from "../../components/metamask/Metamask";
 import { envs } from '../../utils/constants';
 import { otpLogin } from '../../utils/resquests';
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../utils/utils";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
   const [otpData, setOtpData] = useState({
     phone: envs.LOGIN_PHONE,
     otp: envs.LOGIN_CODE,
@@ -46,8 +53,18 @@ const Login = () => {
       phone: otpData.phone,
       code: otpData.otp,
       voip: otpData.void,
-    }).then((res) => {}).catch((err) => {
-      setError(err.message);
+    }).then((res) => {
+
+      userLogin({
+        dispatch,
+        token: res.access_token,
+        user: res.user,
+      });
+
+      router.push('/');
+
+    }).catch((err) => {
+      setError(err);
     }).finally(() => {
       setLoading(false);
     });
@@ -132,7 +149,7 @@ const Login = () => {
                 {/* <!-- OTP --> */}
                 <TabPanel>
                   <div className="tab-pane fade show active">
-                    <form className="mb-6">
+                    <form onSubmit={submitHandler} className="mb-6">
                       <div className="mb-4">
                         <label
                           htmlFor="phone"
@@ -169,10 +186,17 @@ const Login = () => {
 
                       <div className="mb-4 pt-4">
                         <button
+                          disabled={loading}
                           type="submit"
                           className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent"
                         >
-                          <span>Sign in</span>
+                          <span>
+                            {
+                              loading ? 'Loading...' :
+                              error ? 'Try Again' :
+                              'Sign in'
+                            }
+                          </span>
                         </button>
                       </div>
                     </form>

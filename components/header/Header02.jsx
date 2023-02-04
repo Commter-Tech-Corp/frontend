@@ -11,6 +11,7 @@ import {
 } from "../../utils/daynamicNavigation";
 import { useEffect, useState } from "react";
 import WalletButtonLight from "../wallet-btn/WalletButtonLight";
+import { isLoggedIn, userLogout } from "../../utils/utils";
 
 export default function Header02() {
   const [toggle, setToggle] = useState(false);
@@ -764,7 +765,15 @@ export default function Header02() {
                     </a>
                   </Link>
                   <Link href="/login">
-                    <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
+                    <a 
+                      onClick={() => {
+                        if (isLoggedIn()) {
+                          userLogout({
+                            dispatch,
+                          });
+                        }
+                      }}
+                      className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -776,7 +785,7 @@ export default function Header02() {
                         <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zM7 11V8l-5 4 5 4v-3h8v-2H7z" />
                       </svg>
                       <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
-                        Sign out
+                        { isLoggedIn() ? 'Sign out' : 'Sign in' }
                       </span>
                     </a>
                   </Link>

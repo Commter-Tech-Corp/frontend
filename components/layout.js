@@ -7,9 +7,23 @@ import Header01 from "./header/Header01";
 import Header02 from "./header/Header02";
 import Header03 from "./header/Header03";
 import Header04 from "./header/Header04";
+import { useEffect } from "react";
+
+import { getTokenCookie } from '../utils/utils'
+import { useDispatch } from "react-redux";
+import { setToken } from "../redux/authSlice";
 
 export default function Layout({ children }) {
   const route = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = getTokenCookie();
+
+    if (token) {
+      dispatch(setToken(token));
+    }
+  }, [dispatch]);
 
   // header start
   let header;

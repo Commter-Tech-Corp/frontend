@@ -1,3 +1,4 @@
+import { getTokenCookie } from './utils';
 import axios from 'axios';
 import { baseApiUrl } from './constants';
 
@@ -95,8 +96,28 @@ export const otpLogin = ({
 }): Promise<LoginRes> => {
     return new Promise(async(resolve, reject) => {
         try {
-            const res = await axios.get(`${baseApiUrl}check-otp?phone=${phone}&code=${code}&voip=${voip}`);
+            const res = await axios.post(`${baseApiUrl}check-otp?phone=${phone}&code=${code}&voip=${voip}`);
             resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** Order
+
+export const getOrders = (): Promise<OrderItem []> => {
+    return new Promise(async(resolve, reject) => {
+        const token = getTokenCookie();
+        try {
+            const res = await axios.get<OrderResData>(`${baseApiUrl}user/order`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            resolve(res.data.orders || []);
         }
         catch (error) {
             reject(error);
