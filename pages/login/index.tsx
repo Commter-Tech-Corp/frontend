@@ -5,26 +5,70 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Meta from "../../components/Meta";
 import { Metamask_comp_login } from "../../components/metamask/Metamask";
+import { envs } from '../../utils/constants';
+import { otpLogin } from '../../utils/resquests';
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../utils/utils";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
+  const [otpData, setOtpData] = useState({
+    phone: envs.LOGIN_PHONE,
+    otp: envs.LOGIN_CODE,
+    void: envs.LOGIN_VOIP,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [itemActive, setItemActive] = useState(1);
   const tabItem = [
     {
       id: 1,
-      text: "Ethereum",
-      icon: "ETH",
+      text: "OTP",
+      icon: "otp",
     },
     {
       id: 2,
-      text: "Torus",
-      icon: "torus",
+      text: "Email",
+      icon: "email",
     },
-    {
-      id: 4,
-      text: "Mobile Wallet",
-      icon: "mbl-wallet",
-    },
+    // {
+    //   id: 4,
+    //   text: "Mobile Wallet",
+    //   icon: "mbl-wallet",
+    // },
   ];
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    
+    setLoading(true);
+
+    otpLogin({
+      phone: otpData.phone,
+      code: otpData.otp,
+      voip: otpData.void,
+    }).then((res) => {
+
+      userLogin({
+        dispatch,
+        token: res.access_token,
+        user: res.user,
+      });
+
+      router.push('/');
+
+    }).catch((err) => {
+      setError(err);
+    }).finally(() => {
+      setLoading(false);
+    });
+  }
 
   return (
     <div>
@@ -102,10 +146,61 @@ const Login = () => {
                   })}
                 </TabList>
 
-                {/* <!-- Ethereum --> */}
+                {/* <!-- OTP --> */}
                 <TabPanel>
                   <div className="tab-pane fade show active">
-                    <Metamask_comp_login />
+                    <form onSubmit={submitHandler} className="mb-6">
+                      <div className="mb-4">
+                        <label
+                          htmlFor="phone"
+                          className="block text-jacarta-700 dark:text-white text-sm font-medium mb-2"
+                        >
+                          Phone
+                        </label>
+                        <input
+                          type="text"
+                          id="phone"
+                          value={otpData.phone}
+                          onChange={(e) => setOtpData({ ...otpData, phone: e.target.value })}
+                          className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:text-white dark:placeholder-jacarta-300 placeholder-jacarta-400 dark:focus:ring-accent focus:ring-accent dark:focus:border-accent focus:border-accent block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          placeholder="Enter Phone"
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label
+                          htmlFor="otp"
+                          className="block text-jacarta-700 dark:text-white text-sm font-medium mb-2"
+                        >
+                          OTP
+                        </label>
+                        <input
+                          type="text"
+                          id="otp"
+                          value={otpData.otp}
+                          onChange={(e) => setOtpData({ ...otpData, otp: e.target.value })}
+                          className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:text-white dark:placeholder-jacarta-300 placeholder-jacarta-400 dark:focus:ring-accent focus:ring-accent dark:focus:border-accent focus:border-accent block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          placeholder="Enter OTP"
+                        />
+                      </div>
+
+                      <div className="mb-4 pt-4">
+                        <button
+                          disabled={loading}
+                          type="submit"
+                          className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent"
+                        >
+                          <span>
+                            {
+                              loading ? 'Loading...' :
+                              error ? 'Try Again' :
+                              'Sign in'
+                            }
+                          </span>
+                        </button>
+                      </div>
+                    </form>
+                    {/* <Metamask_comp_login />
 
                     <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
                       <img
@@ -127,7 +222,7 @@ const Login = () => {
 
                     <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
                       <span>Show more options</span>
-                    </button>
+                    </button> */}
                   </div>
                 </TabPanel>
                 {/* <!-- Ethereum end --> */}
@@ -139,7 +234,7 @@ const Login = () => {
                     id="torus"
                     aria-labelledby="torus-tab"
                   >
-                    <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
+                    {/* <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
                       <img
                         src="/images/wallets/torus_24.svg"
                         className="mr-2.5 inline-block h-6 w-6"
@@ -161,13 +256,13 @@ const Login = () => {
 
                     <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
                       <span>Show more options</span>
-                    </button>
+                    </button> */}
                   </div>
                 </TabPanel>
                 {/* <!-- Torus end --> */}
 
                 {/* <!-- Wallet Connect --> */}
-                <TabPanel>
+                {/* <TabPanel>
                   <div className="tab-pane fade">
                     <button className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent">
                       <img
@@ -193,7 +288,7 @@ const Login = () => {
                       <span>Show more options</span>
                     </button>
                   </div>
-                </TabPanel>
+                </TabPanel> */}
                 {/* <!-- Wallet Connect --> */}
               </Tabs>
             </div>

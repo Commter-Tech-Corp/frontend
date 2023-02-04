@@ -11,6 +11,8 @@ import {
 } from "../../utils/daynamicNavigation";
 import { useEffect, useState } from "react";
 import WalletButton from "../wallet-btn/WalletButton";
+import { isLoggedIn, userLogout } from "../../utils/utils";
+import { useDispatch } from "react-redux";
 
 export default function Header01() {
   const [toggle, setToggle] = useState(false);
@@ -26,6 +28,7 @@ export default function Header01() {
   });
 
   const route = useRouter();
+  const dispatch = useDispatch();
   /* -------------------------------------------------------------------------- */
   /*                            daynamic navigations                            */
   /* -------------------------------------------------------------------------- */
@@ -709,7 +712,7 @@ export default function Header01() {
                       </svg>
                     </button>
                   </div>
-                  <div className="dark:border-jacarta-600 border-jacarta-100 mx-5 mb-6 rounded-lg border p-4">
+                  {/* <div className="dark:border-jacarta-600 border-jacarta-100 mx-5 mb-6 rounded-lg border p-4">
                     <span className="dark:text-jacarta-200 text-sm font-medium tracking-tight">
                       Balance
                     </span>
@@ -721,7 +724,7 @@ export default function Header01() {
                         10 ETH
                       </span>
                     </div>
-                  </div>
+                  </div> */}
                   <Link href="/user/avatar_6">
                     <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
                       <svg
@@ -756,8 +759,71 @@ export default function Header01() {
                       </span>
                     </a>
                   </Link>
-                  <Link href="/login">
+
+                  <Link href="/orders">
                     <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width={24}
+                        height={24}
+                        className="fill-jacarta-700 h-4 w-4 transition-colors dark:fill-white"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      </svg>
+                      <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
+                        Orders
+                      </span>
+                    </a>
+                  </Link>
+
+                  <Link href="/cart">
+                    <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width={24}
+                        height={24}
+                        className="fill-jacarta-700 h-4 w-4 transition-colors dark:fill-white"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      </svg>
+                      <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
+                        Cart
+                      </span>
+                    </a>
+                  </Link>
+
+                  <Link href="/favoroites">
+                    <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width={24}
+                        height={24}
+                        className="fill-jacarta-700 h-4 w-4 transition-colors dark:fill-white"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      </svg>
+                      <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
+                        Favoroites
+                      </span>
+                    </a>
+                  </Link>
+
+                  <Link href="/login">
+                    <a 
+                      onClick={() => {
+                        if (isLoggedIn()) {
+                          userLogout({
+                            dispatch: dispatch,
+                          });
+                        }
+                      }}
+                      className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -769,7 +835,7 @@ export default function Header01() {
                         <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zM7 11V8l-5 4 5 4v-3h8v-2H7z" />
                       </svg>
                       <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
-                        Sign out
+                        { isLoggedIn() ? 'Sign out' : 'Sign in' }
                       </span>
                     </a>
                   </Link>
