@@ -82,3 +82,24 @@ export const getFeaturedVideos = ({
         }
     });
 }
+
+// ** Login
+export const otpLogin = ({
+    phone,
+    code,
+    voip,
+}: {
+    phone: string;
+    code: string;
+    voip: string;
+}): Promise<LoginRes> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}check-otp?phone=${phone}&code=${code}&voip=${voip}`);
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
