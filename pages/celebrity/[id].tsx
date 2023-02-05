@@ -31,7 +31,7 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 }) => {
 	const item: CelebrityDetailsType = data;
 
-	console.log(item);
+	console.log('data', data)
 
 	const { 
 		id, 
@@ -105,59 +105,11 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 						<h2 className="font-display text-jacarta-700 mb-2 text-4xl font-medium dark:text-white">
 							{title}
 						</h2>
-						{/* <div className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 mb-8 inline-flex items-center justify-center rounded-full border bg-white py-1.5 px-4">
-							<Tippy content="ETH">
-							<svg className="icon h-4 w-4 mr-1">
-								<use xlinkHref="/icons.svg#icon-ETH"></use>
-							</svg>
-							</Tippy>
-
-							<Tippy
-								hideOnClick={false}
-								content={
-									copied ? <span>copied</span> : <span>copy</span>
-								}
-							>
-							<button className="js-copy-clipboard dark:text-jacarta-200 max-w-[10rem] select-none overflow-hidden text-ellipsis whitespace-nowrap">
-								<CopyToClipboard
-								text={userId}
-								onCopy={() => setCopied(true)}
-								>
-								<span>{userId}</span>
-								</CopyToClipboard>
-							</button>
-							</Tippy>
-						</div> */}
 
 						<p className="dark:text-jacarta-300 mx-auto mb-2 max-w-xl text-lg">
 							{text}
 						</p>
 
-						{/* <span className="text-jacarta-400">
-							Joined December {joinYear}
-						</span> */}
-
-						{/* <div className="mt-6 flex items-center justify-center space-x-2.5 relative">
-							<div className="dark:border-jacarta-600 dark:hover:bg-jacarta-600 border-jacarta-100 hover:bg-jacarta-100 dark:bg-jacarta-700 rounded-xl border bg-white">
-							<div className="js-likes relative inline-flex h-10 w-10 cursor-pointer items-center justify-center text-sm">
-								<button onClick={() => handleLikes()}>
-								{likesImage ? (
-									<svg className="icon dark:fill-jacarta-200 fill-jacarta-500 h-4 w-4">
-									<use xlinkHref="/icons.svg#icon-heart-fill"></use>
-									</svg>
-								) : (
-									<svg className="icon dark:fill-jacarta-200 fill-jacarta-500 h-4 w-4">
-									<use xlinkHref="/icons.svg#icon-heart"></use>
-									</svg>
-								)}
-								</button>
-							</div>
-							</div>
-
-							{/* <Social_dropdown /> 
-
-							<Auctions_dropdown classes="dark:border-jacarta-600 dark:hover:bg-jacarta-600 border-jacarta-100 dropdown hover:bg-jacarta-100 dark:bg-jacarta-700 rounded-xl border bg-white relative" />
-						</div> */}
 					</div>
 				</div>
 				</section>
@@ -165,6 +117,7 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 				<User_items_Celeb
 					events={item.events || []}
 					calls={item.calls || []}
+					nfts={item.nft || []}
 				/>
 			</div>
 			{/* <!-- end item --> */}
@@ -188,7 +141,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 		return {
 			props: {
-				data,
+				data: data || {}
 			}
 		}
 	} catch (error) {

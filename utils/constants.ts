@@ -10,3 +10,5 @@ export const envs = {
 
 export const tokenKey = 'user-token';
 export const expireDay = 365; // in days
+
+export const placeholderImage = '/images/products/item_1.jpg';

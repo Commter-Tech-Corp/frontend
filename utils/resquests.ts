@@ -58,8 +58,8 @@ export const getCelebrityDetails = (id: number): Promise<CelebrityDetailsType> =
     return new Promise(async(resolve, reject) => {
         try {
             const res = await axios.get(`${baseApiUrl}celebrities/${id}`);
+            
             resolve(res.data);
-            resolve(res.data.event);
         }
         catch (error) {
             reject(error);
@@ -77,6 +77,19 @@ export const getFeaturedVideos = ({
         try {
             const res = await axios.get(`${baseApiUrl}featured?type=call&limit=${per_page}`);
             resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+export const getVideoDetails = (id: number): Promise<VidoeItemType> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}call/${id}`);
+            
+            resolve(res.data.call);
         }
         catch (error) {
             reject(error);
@@ -118,6 +131,20 @@ export const getOrders = (): Promise<OrderItem []> => {
             });
 
             resolve(res.data.orders || []);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** NFTs
+
+export const getNftDetails = (id: number): Promise<NftItemType> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}nft/${id}`);
+            resolve(res.data.nft);
         }
         catch (error) {
             reject(error);
