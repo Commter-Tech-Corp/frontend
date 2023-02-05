@@ -151,3 +151,38 @@ export const getNftDetails = (id: number): Promise<NftItemType> => {
         }
     });
 }
+
+// ** card
+export const getCardList = (): Promise<CardResData> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}user/card`, {
+                headers: {
+                    Authorization: `Bearer ${getTokenCookie()}`
+                }
+            });
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** favorite
+export const getFavoriteList = (): Promise<FavoroiteItem []> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}user/favourite?type=list`, {
+                headers: {
+                    Authorization: `Bearer ${getTokenCookie()}`
+                }
+            });
+
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
