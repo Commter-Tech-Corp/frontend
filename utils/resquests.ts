@@ -1,3 +1,4 @@
+import { getTokenCookie } from './utils';
 import axios from 'axios';
 import { baseApiUrl } from './constants';
 
@@ -57,8 +58,8 @@ export const getCelebrityDetails = (id: number): Promise<CelebrityDetailsType> =
     return new Promise(async(resolve, reject) => {
         try {
             const res = await axios.get(`${baseApiUrl}celebrities/${id}`);
+            
             resolve(res.data);
-            resolve(res.data.event);
         }
         catch (error) {
             reject(error);
@@ -75,6 +76,109 @@ export const getFeaturedVideos = ({
     return new Promise(async(resolve, reject) => {
         try {
             const res = await axios.get(`${baseApiUrl}featured?type=call&limit=${per_page}`);
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+export const getVideoDetails = (id: number): Promise<VidoeItemType> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}call/${id}`);
+            
+            resolve(res.data.call);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** Login
+export const otpLogin = ({
+    phone,
+    code,
+    voip,
+}: {
+    phone: string;
+    code: string;
+    voip: string;
+}): Promise<LoginRes> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.post(`${baseApiUrl}check-otp?phone=${phone}&code=${code}&voip=${voip}`);
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** Order
+
+export const getOrders = (): Promise<OrderItem []> => {
+    return new Promise(async(resolve, reject) => {
+        const token = getTokenCookie();
+        try {
+            const res = await axios.get<OrderResData>(`${baseApiUrl}user/order`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            resolve(res.data.orders || []);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** NFTs
+
+export const getNftDetails = (id: number): Promise<NftItemType> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}nft/${id}`);
+            resolve(res.data.nft);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** card
+export const getCardList = (): Promise<CardResData> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}user/card`, {
+                headers: {
+                    Authorization: `Bearer ${getTokenCookie()}`
+                }
+            });
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
+// ** favorite
+export const getFavoriteList = (): Promise<FavoroiteItem []> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get(`${baseApiUrl}user/favourite?type=list`, {
+                headers: {
+                    Authorization: `Bearer ${getTokenCookie()}`
+                }
+            });
+
             resolve(res.data);
         }
         catch (error) {

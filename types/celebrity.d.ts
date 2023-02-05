@@ -20,6 +20,7 @@ interface CelebrityDetailsType {
     calls:         VidoeItemType [];
     videos?:        VidoeItemType [];
     events:        EventDetailType [];
+    nft?:        NftItemType [];
 }
 
 interface FeaturedCelebrityResponse {

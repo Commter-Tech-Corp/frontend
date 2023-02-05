@@ -1,39 +1,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { items_data } from '../../data/items_data';
-import Auctions_dropdown from '../../components/dropdown/Auctions_dropdown';
-import Link from 'next/link';
-import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import Items_Countdown_timer from '../../components/items_countdown_timer';
-import { ItemsTabs } from '../../components/component';
-// import More_items from './more_items';
-import Likes from '../../components/likes';
 import Meta from '../../components/Meta';
 import { useDispatch } from 'react-redux';
-import { bidsModalShow } from '../../redux/counterSlice';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getEventDetails, getVideoDetails } from '../../utils/resquests';
-import { placeholderImage } from '../../utils/constants';
+import { getNftDetails } from '../../utils/resquests';
 
-interface DetailsItemType {
-	id: string;
-	image: string;
-	title: string;
-	price: number;
-	likes: number;
-	text: string;
-	creatorImage: string;
-	ownerImage: string;
-	creatorname: string;
-	ownerName: string;
-	auction_timer: string;
-}
-
-const VideoItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
+const NftItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 	data
 }) => {
-	const item: VidoeItemType = data;
+	const item: NftItemType = data;
+
+    console.log(item)
 
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -56,8 +34,8 @@ const VideoItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 		price,
 		auction_timer,
 	} = {
-		image: item.photo || placeholderImage,
-		title: item.name,
+		image: item.media,
+		title: item.title,
 		id: item.id,
 		likes: 0,
 		auction_timer: 0,
@@ -199,11 +177,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	}
 
 	try {
-		const data = await getVideoDetails(+(id.toString()));
+		const data = await getNftDetails(+(id.toString()));
 
 		return {
 			props: {
-				data: data || {}
+				data,
 			}
 		}
 	} catch (error) {
@@ -213,4 +191,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	}
 }
 
-export default VideoItem;
+export default NftItem;
