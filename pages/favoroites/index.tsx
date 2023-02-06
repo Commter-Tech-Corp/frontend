@@ -30,7 +30,7 @@ export default function FavoroitesPage () {
 				className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4"
 				>
 					{favoroitesItems.map((item, index) => {
-						const detailUrl = '/favoroite/';
+						const detailUrl = '/celebrity/';
 
 						const { id, image, title } = {
 							id: item.id,
@@ -43,8 +43,8 @@ export default function FavoroitesPage () {
 							<div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
 							<figure>
 								{/* {`item/${itemLink}`} */}
-								{/* <Link href={detailUrl + id} passHref>
-									<a> */}
+								<Link href={detailUrl + id} passHref>
+									<a>
 										<div className="w-full">
                                             <Image
                                                 src={image}
@@ -58,23 +58,23 @@ export default function FavoroitesPage () {
                                                 placeholder="empty"
                                             />
 										</div>
-									{/* </a>
-								</Link> */}
+									</a>
+								</Link>
 							</figure>
 							<div className="mt-4">
-								{/* <Link href={detailUrl + id} passHref>
-                                    <a> */}
+								<Link href={detailUrl + id} passHref>
+                                    <a>
                                         <h3 className="font-display pb-2 text-jacarta-700 hover:text-accent text-base dark:text-white">
                                         {title}
                                         </h3>
-                                    {/* </a>
-								</Link> */}
+                                    </a>
+								</Link>
 
                                 <p className="text-white/50">{item.sub_title}</p>
 								
 							</div>
 
-                                {/* <div className="mt-4 flex items-center justify-between">
+                                <div className="mt-4 flex items-center justify-between">
                                     <Link href={detailUrl + id} passHref>
                                     <a>
                                     <button
@@ -86,7 +86,7 @@ export default function FavoroitesPage () {
                                     </a>
                                     </Link>
 
-                                </div> */}
+                                </div>
 							</div>
 						</article>
 						)
