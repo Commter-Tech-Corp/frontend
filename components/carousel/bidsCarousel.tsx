@@ -7,10 +7,8 @@ import "tippy.js/dist/tippy.css";
 import { bidsData } from "../../data/bids_data";
 import Link from "next/link";
 import Tippy from "@tippyjs/react";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import { bidsModalShow } from "../../redux/counterSlice";
-import { useDispatch } from "react-redux";
-import Likes from "../likes";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdArrowForward } from "react-icons/md";
+import { v4 as uuidv4 } from "uuid";
 
 export interface SliderItem {
   id: number;
@@ -30,8 +28,14 @@ interface Props {
 
 const BidsCarousel = ({
   data = bidsData,
-  detailUrl = '/item/'
+  detailUrl = '/item/',
 }: Props) => {
+  const sliderId = uuidv4();
+
+  console.log('sliderId: ', sliderId);
+
+  const sliderNext = `bids-swiper-button-next-${sliderId}`;
+  const sliderPrev = `bids-swiper-button-prev-${sliderId}`;
 
   return (
     <>
@@ -39,7 +43,6 @@ const BidsCarousel = ({
         modules={[Navigation, Pagination, Scrollbar]}
         spaceBetween={30}
         slidesPerView="auto"
-        loop={true}
         breakpoints={{
           240: {
             slidesPerView: 1,
@@ -55,18 +58,23 @@ const BidsCarousel = ({
           },
         }}
         navigation={{
-          nextEl: ".bids-swiper-button-next",
-          prevEl: ".bids-swiper-button-prev",
+          nextEl: `.${sliderNext}`,
+          prevEl: `.${sliderPrev}`,
+          // nextEl: ".bids-swiper-button-next",
+          // prevEl: ".bids-swiper-button-prev",
         }}
         className=" card-slider-4-columns !py-5"
       >
-        {data.map((item) => {
+        {data.length > 0 && [...data, data[0]].map((item, index) => {
           const { id, image, title, bid_number, eth_number, react_number, price } =
             item;
-            
+
+          const isLastItem = index === data.length;
+
           return (
-            <SwiperSlide className="text-white" key={id}>
-              <article>
+            <SwiperSlide className="text-white" key={index}>
+              <article className="relative">
+                
                 <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
                   <figure>
                     {/* {`item/${itemLink}`} */}
@@ -145,16 +153,52 @@ const BidsCarousel = ({
                     /> */}
                   </div>
                 </div>
+
+                {isLastItem && (
+                  <div className="absolute left-0 top-0 z-10 h-full w-full flex flex-col gap-2 items-center justify-center dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
+                    <Link href={detailUrl} passHref>
+                      <a>
+                        <div className="w-full p-4 rounded-full bg-jacarta-600">
+                          <MdArrowForward className="text-4xl text-accent" />
+                        </div>
+                      </a>
+                    </Link>
+
+                    <Link href={detailUrl} passHref>
+                      <a>
+                        <p>View all</p>
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </article>
             </SwiperSlide>
           );
         })}
+
+        {/* view all card */}
+        {/* {data.length > 0 && (
+          <SwiperSlide className="text-white h-full">
+            <article>
+
+              <div className="h-full dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
+                <Link href="/bids" passHref>
+                  <a>
+                    <div className="w-full">
+                      <MdArrowForward className="text-4xl text-accent" />
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            </article>
+          </SwiperSlide>
+        )} */}
       </Swiper>
       {/* <!-- Slider Navigation --> */}
-      <div className="group bids-swiper-button-prev swiper-button-prev shadow-white-volume absolute !top-1/2 !-left-4 z-10 -mt-6 flex !h-12 !w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-jacarta-700 text-xl sm:!-left-6 after:hidden">
+      <div className={sliderPrev + " group bids-swiper-button-prev swiper-button-prev shadow-white-volume absolute !top-1/2 !-left-4 z-10 -mt-6 flex !h-12 !w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-jacarta-700 text-xl sm:!-left-6 after:hidden"}>
         <MdKeyboardArrowLeft />
       </div>
-      <div className="group bids-swiper-button-next swiper-button-next shadow-white-volume absolute !top-1/2 !-right-4 z-10 -mt-6 flex !h-12 !w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-jacarta-700 text-xl sm:!-right-6 after:hidden">
+      <div className={sliderNext + " group bids-swiper-button-next swiper-button-next shadow-white-volume absolute !top-1/2 !-right-4 z-10 -mt-6 flex !h-12 !w-12 cursor-pointer items-center justify-center rounded-full bg-white p-3 text-jacarta-700 text-xl sm:!-right-6 after:hidden"}>
         <MdKeyboardArrowRight />
       </div>
     </>

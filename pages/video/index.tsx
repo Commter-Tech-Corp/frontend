@@ -1,26 +1,37 @@
+import { Pagination } from "@mui/material";
 import Tippy from "@tippyjs/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/loader";
 import Meta from "../../components/Meta";
-import User_items from "../../components/user/User_items";
-import { getOrders } from "../../utils/resquests";
+import { getFeaturedCelebrities, getFeaturedVideos } from "../../utils/resquests";
 
-export default function OrdersPage () {
-	const [orders, setOrders] = useState<OrderItem []>([]);
+const PER_PAGE = 8;
+export default function Videos () {
+	const [videoItems, setVideoItems] = useState<VidoeItemType []>([]);
+	const [page, setPage] = useState<number>(1);
+	const [totalPages, setTotalPages] = useState<number>(1);
+
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string>('');
 
 	useEffect(() => {
-		getOrders().then((orers) => {
-			setOrders(orers);
+		setLoading(true);
+
+		getFeaturedVideos({
+			per_page: PER_PAGE,
+			current_page: page,
+		}).then((data) => {
+			setVideoItems(data.data || []);
+			
+			setTotalPages(Math.ceil(data.meta?.total / PER_PAGE));
 		}).catch((err) => {
-			setError('Error loading orders');
+			setError('Error loading videos');
 		}).finally(() => {
 			setLoading(false);
 		});
-	}, [])
+	}, [page])
 
 	return (
 		<div className="mt-[95px]">
@@ -31,18 +42,18 @@ export default function OrdersPage () {
 				<div
 				className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4"
 				>
-					{orders.map((order, index) => {
-						const detailUrl = '/orders/';
+					{videoItems.map((event, index) => {
+						const detailUrl = '/video/';
 
 						const { id, image, title, price } = {
-							id: order.id,
-							image: '/images/products/item_1.jpg',
-							title: order.name,
-							price: order.price,
+							id: event.id,
+							image: event.photo || '/images/products/item_1.jpg',
+							title: event.name,
+							price: event.price,
 						}
 
 						return (
-						<article key={order.id + '-' + index}>
+						<article key={event.id + '-' + index}>
 							<div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
 							<figure>
 								{/* {`item/${itemLink}`} */}
@@ -92,27 +103,41 @@ export default function OrdersPage () {
 								)}
 							</div>
 
-							<div className="mt-8 flex items-center justify-between">
-								<Link href={detailUrl + id} passHref>
-								<a>
-								<button
-									type="button"
-									className="text-accent font-display text-sm font-semibold"
-								>
-									View Details
-								</button>
-								</a>
-								</Link>
+                                <div className="mt-8 flex items-center justify-between">
+                                    <Link href={detailUrl + id} passHref>
+                                    <a>
+                                    <button
+                                        type="button"
+                                        className="text-accent font-display text-sm font-semibold"
+                                    >
+                                        View Details
+                                    </button>
+                                    </a>
+                                    </Link>
 
-								{/* <Likes
-								like={react_number}
-								classes="flex items-center space-x-1"
-								/> */}
-							</div>
+                                    {/* <Likes
+                                    like={react_number}
+                                    classes="flex items-center space-x-1"
+                                    /> */}
+                                </div>
 							</div>
 						</article>
 						)
 					})}
+				</div>
+
+				<div className="white-class mt-16">
+					{videoItems.length > 0 && (
+						<Pagination 
+							onChange={(e, page) => {
+								console.log(e, page)
+								setPage(page);
+							}}
+							count={totalPages}
+							variant="outlined" 
+							color="primary" 
+							shape="rounded" />
+					)}
 				</div>
 
 			</div>
