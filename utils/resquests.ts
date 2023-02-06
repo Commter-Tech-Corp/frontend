@@ -15,7 +15,7 @@ export const getFeaturedEvents = ({
 }: PaginationProps): Promise<FeaturedEventsResponseType> => {
     return new Promise(async(resolve, reject) => {
         try {
-            const res = await axios.get(`${baseApiUrl}featured?type=event&limit=${per_page}`);
+            const res = await axios.get(`${baseApiUrl}featured?type=event&limit=${per_page}&page=${current_page}`);
             resolve(res.data);
         }
         catch (error) {
@@ -45,7 +45,7 @@ export const getFeaturedCelebrities = ({
 }: PaginationProps): Promise<FeaturedCelebrityResponse> => {
     return new Promise(async(resolve, reject) => {
         try {
-            const res = await axios.get(`${baseApiUrl}featured?type=celebrity&limit=${per_page}`);
+            const res = await axios.get(`${baseApiUrl}featured?type=celebrity&limit=${per_page}&page=${current_page}`);
             resolve(res.data);
         }
         catch (error) {
@@ -75,7 +75,7 @@ export const getFeaturedVideos = ({
 }: PaginationProps): Promise<FeaturedVideoResponse> => {
     return new Promise(async(resolve, reject) => {
         try {
-            const res = await axios.get(`${baseApiUrl}featured?type=call&limit=${per_page}`);
+            const res = await axios.get(`${baseApiUrl}featured?type=call&limit=${per_page}&page=${current_page}`);
             resolve(res.data);
         }
         catch (error) {
