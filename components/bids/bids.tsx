@@ -6,6 +6,7 @@ import "tippy.js/dist/tippy.css";
 import BidsCarousel, { SliderItem } from "../carousel/bidsCarousel";
 import { useEffect, useState } from "react";
 import { getFeaturedCelebrities, getFeaturedEvents, getFeaturedVideos } from "../../utils/resquests";
+import { ProductRowSkeleton } from "../skeleton";
 
 interface BidsProps {
   bgWhite?: boolean;
@@ -97,6 +98,10 @@ export const FeaturedEvnets = () => {
           {sliderData.length > 0 && (
             <BidsCarousel key="event" data={sliderData} detailUrl='/event/' />
           )}
+
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}
@@ -153,6 +158,10 @@ export const FeaturedVideos = () => {
           {/* <!-- Slider --> */}
           {sliderData.length > 0 && (
             <BidsCarousel key="videos" data={sliderData} detailUrl='/video/' />
+          )}
+
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
           )}
         </div>
       </div>
@@ -211,6 +220,9 @@ export const FeaturedCelebrities = () => {
             <BidsCarousel key="celebs" data={sliderData} detailUrl='/celebrity/' />
           )}
           
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}

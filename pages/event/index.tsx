@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/loader";
 import Meta from "../../components/Meta";
+import { ProductRowSkeleton } from "../../components/skeleton";
 import User_items from "../../components/user/User_items";
 import { getOrders, getFeaturedEvents } from "../../utils/resquests";
 
@@ -33,6 +34,16 @@ export default function EventsPage () {
 			setLoading(false);
 		});
 	}, [page])
+
+	const skeletonRows: JSX.Element [] = [];
+
+	if (loading && events.length === 0) {
+		for (let i = 0; i < (PER_PAGE / 4); i++) {
+			skeletonRows.push(<div className="w-full mb-4">
+				<ProductRowSkeleton key={i} />
+			</div>);
+		}
+	}
 
 	return (
 		<div className="mt-[95px]">
@@ -126,6 +137,8 @@ export default function EventsPage () {
 						)
 					})}
 				</div>
+
+				{skeletonRows}
 
 				<div className="white-class mt-16">
 					{events.length > 0 && (
