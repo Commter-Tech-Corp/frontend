@@ -7,6 +7,7 @@ import BidsCarousel, { SliderItem } from "../carousel/bidsCarousel";
 import { useEffect, useState } from "react";
 import { getFeaturedCelebrities, getFeaturedEvents, getFeaturedVideos } from "../../utils/resquests";
 import { ProductRowSkeleton } from "../skeleton";
+import { placeholderImage } from "../../utils/constants";
 
 interface BidsProps {
   bgWhite?: boolean;
@@ -69,7 +70,7 @@ export const FeaturedEvnets = () => {
     return {
       id: item.id,
       title: item.name,
-      image: item.event_photo,
+      image: item.event_photo || placeholderImage,
       price: item.price,
       schedule: new Date(item.schedule)?.toLocaleDateString() + ' ' + new Date(item.schedule)?.toLocaleTimeString(),
     }
