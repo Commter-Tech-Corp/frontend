@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/loader";
 import Meta from "../../components/Meta";
+import { ProductRowSkeleton } from "../../components/skeleton";
 import { getFeaturedCelebrities } from "../../utils/resquests";
 
 const PER_PAGE = 8;
@@ -31,7 +32,17 @@ export default function Celebrities () {
 		}).finally(() => {
 			setLoading(false);
 		});
-	}, [page])
+	}, [page]);
+
+	const skeletonRows: JSX.Element [] = [];
+
+	if (loading && celebriteis.length === 0) {
+		for (let i = 0; i < (PER_PAGE / 4); i++) {
+			skeletonRows.push(<div className="w-full mb-4">
+				<ProductRowSkeleton key={i} />
+			</div>);
+		}
+	}
 
 	return (
 		<div className="mt-[95px]">
@@ -125,6 +136,8 @@ export default function Celebrities () {
 						)
 					})}
 				</div>
+
+				{skeletonRows}
 
 				<div className="white-class mt-16">
 					{celebriteis.length > 0 && (
