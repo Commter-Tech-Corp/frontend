@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/loader";
 import Meta from "../../components/Meta";
-import User_items from "../../components/user/User_items";
+import { ProductRowSkeleton } from "../../components/skeleton";
 import { getOrders } from "../../utils/resquests";
 
 export default function OrdersPage () {
@@ -20,7 +20,17 @@ export default function OrdersPage () {
 		}).finally(() => {
 			setLoading(false);
 		});
-	}, [])
+	}, []);
+
+	const skeletonRows: JSX.Element [] = [];
+
+	if (loading && orders.length === 0) {
+		for (let i = 0; i < 4; i++) {
+			skeletonRows.push(<div className="w-full mb-4">
+				<ProductRowSkeleton key={i} />
+			</div>);
+		}
+	}
 
 	return (
 		<div className="mt-[95px]">
@@ -114,6 +124,8 @@ export default function OrdersPage () {
 						)
 					})}
 				</div>
+
+				{skeletonRows}
 
 			</div>
 

@@ -6,6 +6,8 @@ import "tippy.js/dist/tippy.css";
 import BidsCarousel, { SliderItem } from "../carousel/bidsCarousel";
 import { useEffect, useState } from "react";
 import { getFeaturedCelebrities, getFeaturedEvents, getFeaturedVideos } from "../../utils/resquests";
+import { ProductRowSkeleton } from "../skeleton";
+import { placeholderImage } from "../../utils/constants";
 
 interface BidsProps {
   bgWhite?: boolean;
@@ -68,7 +70,7 @@ export const FeaturedEvnets = () => {
     return {
       id: item.id,
       title: item.name,
-      image: item.event_photo,
+      image: item.event_photo || placeholderImage,
       price: item.price,
       schedule: new Date(item.schedule)?.toLocaleDateString() + ' ' + new Date(item.schedule)?.toLocaleTimeString(),
     }
@@ -96,6 +98,10 @@ export const FeaturedEvnets = () => {
           {/* <!-- Slider --> */}
           {sliderData.length > 0 && (
             <BidsCarousel key="event" data={sliderData} detailUrl='/event/' />
+          )}
+
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
           )}
         </div>
       </div>
@@ -154,6 +160,10 @@ export const FeaturedVideos = () => {
           {sliderData.length > 0 && (
             <BidsCarousel key="videos" data={sliderData} detailUrl='/video/' />
           )}
+
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}
@@ -211,6 +221,9 @@ export const FeaturedCelebrities = () => {
             <BidsCarousel key="celebs" data={sliderData} detailUrl='/celebrity/' />
           )}
           
+          {loading && sliderData.length === 0 && (
+            <ProductRowSkeleton />
+          )}
         </div>
       </div>
       {/* <!-- end hot bids --> */}
