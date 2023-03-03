@@ -6,8 +6,8 @@ html {
 @tailwind utilities;
 
 @layer base {
-	* {
-		text-transform: capitalize;
+	*:not(input) {
+		/* text-transform: capitalize; */
 	}
 	.light body {
 		background: #fff !important;

@@ -67,6 +67,19 @@ export const getCelebrityDetails = (id: number): Promise<CelebrityDetailsType> =
     });
 }
 
+export const celebrityRegistration = (data: any): Promise<any> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.post(`${baseApiUrl}register-celebrity/`, data);
+            
+            resolve(res.data);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
 // ** Video
 
 export const getFeaturedVideos = ({

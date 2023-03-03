@@ -199,6 +199,18 @@ const Login = () => {
                           </span>
                         </button>
                       </div>
+
+                      <div className="mb-4 pt-4">
+                        <Link href="/celebrity/registration" passHref>
+                          <a>
+                          <button
+                            className="dark:bg-jacarta-700 dark:border-jacarta-600 border-jacarta-100 dark:hover:bg-accent hover:bg-accent text-jacarta-700 mb-4 flex w-full items-center justify-center rounded-full border-2 bg-white py-4 px-8 text-center font-semibold transition-all hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent"
+                          >
+                            <span>Become a celebrity</span>
+                          </button>
+                          </a>
+                        </Link>
+                      </div>
                     </form>
                     {/* <Metamask_comp_login />
 
