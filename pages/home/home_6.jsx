@@ -9,7 +9,7 @@ import {
 } from "../../components/component";
 import Collection_category from "../../components/collectrions/collection_category";
 import Hero_6 from "../../components/hero/hero_6";
-import Testimonial from "../../components/blog/testimonial";
+// import Testimonial from "../../components/blog/testimonial";
 
 const Home_6 = () => {
   return (
@@ -20,7 +20,7 @@ const Home_6 = () => {
       <Collection_category bgWhite={true} />
       <Auctions_categories />
       <Browse_category bgWhite={true} />
-      <Testimonial bgWhite={true} />
+      {/* <Testimonial bgWhite={true} /> */}
       <Partners />
       <Download />
     </>
