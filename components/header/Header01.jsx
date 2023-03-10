@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import DarkMode from "../mode/DarkMode";
-import Logo from "./../../public/images/logo.png";
+// import Logo from "./../../public/images/logo.png";
+import Logo from "./../../public/favicon.png";
 import WhiteLogo from "./../../public/images/logo_white.png";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 import WalletButton from "../wallet-btn/WalletButton";
 import { isLoggedIn, userLogout } from "../../utils/utils";
 import { useDispatch } from "react-redux";
+import { mainTitle } from "../../utils/constants";
 
 export default function Header01() {
   const [toggle, setToggle] = useState(false);
@@ -415,18 +417,19 @@ export default function Header01() {
               <div className="dark:hidden">
                 <Image
                   src={Logo}
-                  height={28}
-                  width={130}
-                  alt="Xhibiter | NFT Marketplace"
+                  height={40}
+                  width={80}
+                  alt={mainTitle}
                   className="max-h-7 h-auto "
                 />
               </div>
               <div className="hidden dark:block">
                 <Image
-                  src={WhiteLogo}
-                  height={28}
-                  width={130}
-                  alt="Xhibiter | NFT Marketplace"
+                  src={Logo}
+                  height={40}
+                  width={80}
+                  objectFit="contain"
+                  alt={mainTitle}
                 />
               </div>
             </a>

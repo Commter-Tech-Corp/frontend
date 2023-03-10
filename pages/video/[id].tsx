@@ -171,7 +171,9 @@ const VideoItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 								</span> */}
 							</div>
 
-							<p className="dark:text-jacarta-300 mb-10">{text}</p>
+							{/* <p className="dark:text-jacarta-300 mb-10">{text}</p> */}
+
+							<div dangerouslySetInnerHTML={{ __html: text }} />
 
 							
 							{/* <!-- end bid --> */}

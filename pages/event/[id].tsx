@@ -168,7 +168,9 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 								</span> */}
 							</div>
 
-							<p className="dark:text-jacarta-300 mb-10">{text}</p>
+							{/* <p className="dark:text-jacarta-300 mb-10">{text}</p> */}
+
+							<div dangerouslySetInnerHTML={{ __html: text }} />
 
 							{/* <!-- Creator / Owner --> */}
 							{/* <div className="mb-8 flex flex-wrap">
@@ -310,8 +312,15 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 								</Link>
 							</div> */}
 							{/* <!-- end bid --> */}
+							<div className="mb-10"></div>
+							<Link href="/create">
+								<a className="bg-accent shadow-accent-volume hover:bg-accent-dark w-36 rounded-full py-3 px-8 text-center font-semibold text-white transition-all">
+									Book now
+								</a>
+							</Link>
 						</div>
 						{/* <!-- end details --> */}
+
 					</div>
 					
 					{/* <ItemsTabs /> */}

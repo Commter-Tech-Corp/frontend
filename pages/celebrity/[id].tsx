@@ -106,9 +106,11 @@ const EventItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 							{title}
 						</h2>
 
-						<p className="dark:text-jacarta-300 mx-auto mb-2 max-w-xl text-lg">
+						{/* <p className="dark:text-jacarta-300 mx-auto mb-2 max-w-xl text-lg">
 							{text}
-						</p>
+						</p> */}
+
+						<div dangerouslySetInnerHTML={{ __html: text }} />
 
 					</div>
 				</div>

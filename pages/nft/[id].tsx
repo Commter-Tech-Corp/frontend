@@ -5,6 +5,7 @@ import Meta from '../../components/Meta';
 import { useDispatch } from 'react-redux';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getNftDetails } from '../../utils/resquests';
+import Link from 'next/link';
 
 const NftItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 	data
@@ -149,10 +150,17 @@ const NftItem: InferGetServerSidePropsType<typeof getServerSideProps> = ({
 								</span> */}
 							</div>
 
-							<p className="dark:text-jacarta-300 mb-10">{text}</p>
+							{/* <p className="dark:text-jacarta-300 mb-10">{text}</p> */}
+							<div dangerouslySetInnerHTML={{ __html: text }} />
 
 							
 							{/* <!-- end bid --> */}
+							<div className="mb-10"></div>
+							<Link href="/create">
+								<a className="bg-accent shadow-accent-volume hover:bg-accent-dark w-36 rounded-full py-3 px-8 text-center font-semibold text-white transition-all">
+									Buy now
+								</a>
+							</Link>
 						</div>
 						{/* <!-- end details --> */}
 					</div>

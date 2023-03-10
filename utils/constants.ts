@@ -12,3 +12,5 @@ export const tokenKey = 'user-token';
 export const expireDay = 365; // in days
 
 export const placeholderImage = '/images/products/item_1.jpg';
+
+export const mainTitle = 'Meet your favorite stars';

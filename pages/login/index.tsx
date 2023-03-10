@@ -5,7 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Meta from "../../components/Meta";
 import { Metamask_comp_login } from "../../components/metamask/Metamask";
-import { envs } from '../../utils/constants';
+import { envs, mainTitle } from '../../utils/constants';
 import { otpLogin } from '../../utils/resquests';
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../utils/utils";
@@ -87,9 +87,9 @@ const Login = () => {
             <Link href="/">
               <a className="relative inline-block py-36">
                 <img
-                  src="/images/logo_white.png"
-                  className="inline-block max-h-7"
-                  alt="Xhibiter | NFT Marketplace"
+                  src="/favicon.png"
+                  className="inline-block w-40 h-40 object-contain max-h-7"
+                  alt={mainTitle}
                 />
               </a>
             </Link>
