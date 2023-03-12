@@ -5,6 +5,7 @@ import { getDefaultCardList, getEventDetails, getVideoDetails, postOrder } from 
 import Image from "next/image";
 import { getCardImage } from "../card";
 import { placeholderImage } from "../../utils/constants";
+import Link from "next/link";
 
 interface DetailsItemType {
     id: string | number;
@@ -70,8 +71,9 @@ const Payment = () => {
     const disabled = useMemo(() => {
         if (paymentType === 'none') return true;
 
-        return !selectedCard;
-    }, [paymentType, selectedCard])
+        // return !selectedCard;
+        return false;
+    }, [paymentType])
 
     const handlePayment = () => {
         if (disabled) return;
@@ -92,6 +94,7 @@ const Payment = () => {
 
         postOrder(data).then((res) => {
             console.log(res);
+            router.push('/');
         });
     }
 
@@ -187,6 +190,22 @@ const Payment = () => {
                                     </article>
                                 )
                             })}
+
+                            {/* choose other card */}
+                            <div className="flex justify-center gap-2 items-center mt-4">
+                                <span className="text-jacarta-500 text-sm font-semibold tracking-tight">
+                                    Or,
+                                </span>
+                                <Link href="/card" passHref>
+                                    <a>
+                                        <button
+                                            className="text-accent text-sm font-semibold tracking-tight"
+                                        >
+                                            Choose other card
+                                        </button>
+                                    </a>
+                                </Link>
+                            </div>
                         </div>
 
                         <button 
