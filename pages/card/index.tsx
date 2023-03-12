@@ -11,7 +11,7 @@ import mastercard from '../../public/images/card/mastard.png'
 import amex from '../../public/images/card/amex.png'
 import { placeholderImage } from "../../utils/constants";
 
-const getCardImage = (brand: string) => {
+export const getCardImage = (brand: string) => {
 	if (brand.match(/visa/i)) return visa;
 	if (brand.match(/mastercard/i)) return mastercard;
 	if (brand.match(/amex/i)) return amex;

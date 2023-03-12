@@ -182,6 +182,31 @@ export const getCardList = (): Promise<CardResData> => {
     });
 }
 
+export const getDefaultCardList = (): Promise<CardItem []> => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const res = await axios.get<CardResData>(`${baseApiUrl}user/card`, {
+                headers: {
+                    Authorization: `Bearer ${getTokenCookie()}`
+                }
+            });
+            
+            const cardItems: CardItem [] = []
+
+            res.data?.sources?.data.forEach((item: CardItem) => {
+                if (item.id === res.data?.default_source) {
+                    cardItems.push(item);
+                }
+            });
+
+            resolve(cardItems);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
 // ** favorite
 export const getFavoriteList = (): Promise<FavoroiteItem []> => {
     return new Promise(async(resolve, reject) => {
