@@ -151,6 +151,24 @@ export const getOrders = (): Promise<OrderItem []> => {
     });
 }
 
+export const postOrder = (data: any): Promise<any> => {
+    return new Promise(async(resolve, reject) => {
+        const token = getTokenCookie();
+        try {
+            const res = await axios.post<OrderResData>(`${baseApiUrl}user/order`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            resolve(res.data.orders || []);
+        }
+        catch (error) {
+            reject(error);
+        }
+    });
+}
+
 // ** NFTs
 
 export const getNftDetails = (id: number): Promise<NftItemType> => {

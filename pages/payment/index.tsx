@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
-import { getDefaultCardList, getEventDetails, getVideoDetails } from '../../utils/resquests';
+import { getDefaultCardList, getEventDetails, getVideoDetails, postOrder } from '../../utils/resquests';
 import Image from "next/image";
 import { getCardImage } from "../card";
 import { placeholderImage } from "../../utils/constants";
@@ -12,6 +12,7 @@ interface DetailsItemType {
     title: string;
     price: number;
     text?: string;
+    celebrity_id?: number;
 }
 
 const Payment = () => {
@@ -37,12 +38,14 @@ const Payment = () => {
     useEffect(() => {
         if (paymentType === 'yurr') {
             getVideoDetails(+(id.toString())).then((res) => {
+                
                 setPaymentData({
                     id: res.id,
                     image: res.photo || placeholderImage,
                     title: res.name,
                     price: res.price,
-                    text: res.detail
+                    text: res.detail,
+                    celebrity_id: res.celebrity_id
                 })
             })
         } else if (paymentType === 'event') {
@@ -52,7 +55,8 @@ const Payment = () => {
                     image: res.event_photo,
                     title: res.name,
                     price: res.price,
-                    text: res.detail
+                    text: res.detail,
+                    celebrity_id: res.celebrity_id
                 })
             })
         }
@@ -68,6 +72,28 @@ const Payment = () => {
 
         return !selectedCard;
     }, [paymentType, selectedCard])
+
+    const handlePayment = () => {
+        if (disabled) return;
+
+        // data['type'] = this.type;
+        // data['id'] = this.id;
+        // data['celebrity_id'] = this.celebrityId;
+        // data['note'] = (this.note != null) ? this.note : '';
+        // data['selected_day'] = this.selectedDay;
+        // data['day_type'] = this.selectedDayType;
+
+        const data = {
+            type: paymentType,
+            id: paymentData?.id,
+            celebrity_id: paymentData?.celebrity_id,
+            note: '',
+        }
+
+        postOrder(data).then((res) => {
+            console.log(res);
+        });
+    }
 
     return (
         <section className="relative lg:mt-24 lg:pt-24 lg:pb-24 mt-24 pt-12 pb-24">
@@ -165,6 +191,7 @@ const Payment = () => {
 
                         <button 
                             disabled={disabled}
+                            onClick={handlePayment}
                             className="w-full mt-4 bg-accent shadow-accent-volume hover:bg-accent-dark disabled:bg-jacarta-500 rounded-full py-3 px-8 text-center font-semibold text-white transition-all"
                         >
                             Confirm Payment
